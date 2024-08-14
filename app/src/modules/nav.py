@@ -23,6 +23,9 @@ def MapDemoNav():
 def ApiTestNav():
     st.sidebar.page_link("pages/12_API_Test.py", label="Test the API", icon='🛜')
 
+def NewProductNav():
+    st.sidebar.page_link("pages/14_New_Product.py", label="Add a New Product", icon='🖥️')
+
 def PredictionNav():
     st.sidebar.page_link("pages/11_Prediction.py", label="Regression Prediction", icon='📈')
 
@@ -34,6 +37,15 @@ def AdminPageNav():
     st.sidebar.page_link("pages/20_Admin_Home.py", label="System Admin", icon='🖥️')
     st.sidebar.page_link("pages/21_ML_Model_Mgmt.py", label='ML Model Management', icon='🏢')
 
+## ------------------------ Examples for Role of advertiser ------------------------
+def AdvertiserHomeNav():
+    st.sidebar.page_link("pages/08_Livefit_Home.py", label="Advertiser Home", icon='👤')
+
+def Audiences():
+    st.sidebar.page_link("pages/81_Audiences.py", label="Create Audience", icon='👥')
+
+def Ads():
+    st.sidebar.page_link("pages/82_Ads.py", label="Create Ad", icon='📝')
 
 # --------------------------------Links Function -----------------------------------------------
 def SideBarLinks(show_home=False):
@@ -66,11 +78,18 @@ def SideBarLinks(show_home=False):
         if st.session_state['role'] == 'usaid_worker':
             PredictionNav()
             ApiTestNav() 
+            NewProductNav()
             ClassificationNav()
         
         # If the user is an administrator, give them access to the administrator pages
         if st.session_state['role'] == 'administrator':
             AdminPageNav()
+        
+        # Show Livefit functions if the user is an LiveFit Advertiser.
+        if st.session_state['role'] == 'advertiser':
+            AdvertiserHomeNav()
+            Audiences()
+            Ads()
 
     # Always show the About page at the bottom of the list of links
     AboutPageNav()

@@ -24,6 +24,11 @@ if st.button('View the Simple API Demo',
              use_container_width=True):
   st.switch_page('pages/12_API_Test.py')
 
+if st.button('Add a New Product', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/14_New_Product.py')
+
 if st.button("View Classification Demo",
              type='primary',
              use_container_width=True):

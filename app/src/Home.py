@@ -34,9 +34,9 @@ SideBarLinks(show_home=True)
 
 # set the title of the page and provide a simple prompt. 
 logger.info("Loading the Home page of the app")
-st.title('The Profs App')
+st.title('Welcome to BalanceBuddy!')
 st.write('\n\n')
-st.write('### HI! As which user would you like to log in?')
+st.write('### As which user would you like to log in?')
 
 # For each of the user personas for which we are implementing
 # functionality, we put a button on the screen that the user 
@@ -72,6 +72,14 @@ if st.button('Act as System Administrator',
     st.session_state['role'] = 'administrator'
     st.session_state['first_name'] = 'SysAdmin'
     st.switch_page('pages/20_Admin_Home.py')
+
+if st.button('Act as LiveFit, an Advertiser', 
+            type = 'primary', 
+            use_container_width=True):
+    st.session_state['authenticated'] = True
+    st.session_state['role'] = 'advertiser'
+    st.session_state['first_name'] = 'LiveFit'
+    st.switch_page('pages/08_Livefit_Home.py')
 
 
 

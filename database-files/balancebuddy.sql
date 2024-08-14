@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS balancebuddy;
+
 CREATE DATABASE IF NOT EXISTS balancebuddy;
 USE balancebuddy;
 
