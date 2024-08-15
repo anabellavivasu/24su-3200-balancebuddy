@@ -19,7 +19,7 @@ if st.button('Create Audience',
               use_container_width=True):
    st.switch_page('pages/81_Audiences.py')
 
-if st.button('Create Ad', 
+if st.button('Create/Delete Ad', 
               type='primary',
               use_container_width=True):
    st.switch_page('pages/82_Ads.py')

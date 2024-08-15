@@ -45,7 +45,7 @@ def Audiences():
     st.sidebar.page_link("pages/81_Audiences.py", label="Create Audience", icon='👥')
 
 def Ads():
-    st.sidebar.page_link("pages/82_Ads.py", label="Create Ad", icon='📝')
+    st.sidebar.page_link("pages/82_Ads.py", label="Create/Delete Ad", icon='📝')
 
 def Engagement():
     st.sidebar.page_link("pages/83_Engagement.py", label="View Engagement", icon='📈')

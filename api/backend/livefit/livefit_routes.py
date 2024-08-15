@@ -1,6 +1,3 @@
-########################################################
-# Sample LiveFit's blueprint of endpoints
-########################################################
 from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from backend.db_connection import db
@@ -56,7 +53,7 @@ def add_new_ad():
     the_data = request.json
     current_app.logger.info(the_data)
 
-    #extracting the variable
+    # extracting the variable
     image_url = the_data['image_url']
     start_date = the_data['start_date']
     end_date = the_data['end_date']
@@ -105,3 +102,26 @@ def get_all_engagement():
     print(theData)
     return jsonify(theData)
 
+# delete ad
+@livefit.route('/delete', methods = ['DELETE'])
+def delete_ad():
+    
+    # collecting data from the request object 
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+    #extracting the variable
+    ad_id = the_data['ad_id']
+    
+    # Constructing the query
+    query = f"""
+    DELETE FROM Ads WHERE ad_id = {ad_id}
+            """
+    current_app.logger.info(query)
+
+    # Executing the delete statement
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+
+    return 'Ad deleted successfully!'

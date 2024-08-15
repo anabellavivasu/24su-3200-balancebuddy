@@ -33,3 +33,18 @@ if submitted:
     st.write(data)
 
     requests.post('http://api:4000/l/ads', json=data)
+
+st.write("# Delete an Ad")
+st.write("## Note: This Action cannot be Reversed")
+
+with st.form("Delete an Ad"):
+    advertisement_id = st.text_input("Input Ad Id:")
+
+    submitted = st.form_submit_button("Delete Ad")
+
+if submitted:
+    data = {}
+    data['ad_id'] = advertisement_id
+    st.write(data)
+
+    requests.delete('http://api:4000/l/delete', json=data)
