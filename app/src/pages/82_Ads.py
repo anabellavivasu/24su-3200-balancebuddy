@@ -45,6 +45,6 @@ with st.form("Delete an Ad"):
 if submitted:
     data = {}
     data['ad_id'] = advertisement_id
-    st.write(data)
+    st.write('Ad Deleted')
 
     requests.delete('http://api:4000/l/delete', json=data)
