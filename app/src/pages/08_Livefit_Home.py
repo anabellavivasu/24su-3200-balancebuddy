@@ -23,3 +23,8 @@ if st.button('Create Ad',
               type='primary',
               use_container_width=True):
    st.switch_page('pages/82_Ads.py')
+
+if st.button('View Engagement', 
+              type='primary',
+              use_container_width=True):
+   st.switch_page('pages/83_Engagement.py')

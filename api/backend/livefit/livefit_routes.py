@@ -41,7 +41,7 @@ def add_new_audience():
 
 # enter a new ad
 @livefit.route('/livefit', methods=['POST'])
-def add_new_add():
+def add_new_ad():
     
     # collecting data from the request object 
     the_data = request.json
@@ -81,11 +81,9 @@ def get_all_engagement():
     the_query = '''
         SELECT engagement_id, feedback, count, ad_id
         FROM Engagement
-        GROUP BY ad_id 
+        GROUP BY ad_id, engagement_id 
     '''
     cursor.execute(the_query)
     theData = cursor.fetchall()
-    the_response = make_response(theData)
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
+    print(theData)
+    return jsonify(theData)

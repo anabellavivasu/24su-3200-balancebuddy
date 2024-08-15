@@ -47,6 +47,9 @@ def Audiences():
 def Ads():
     st.sidebar.page_link("pages/82_Ads.py", label="Create Ad", icon='📝')
 
+def Engagement():
+    st.sidebar.page_link("pages/83_Engagement.py", label="View Engagement", icon='📈')
+
 # --------------------------------Links Function -----------------------------------------------
 def SideBarLinks(show_home=False):
     """
@@ -54,7 +57,7 @@ def SideBarLinks(show_home=False):
     """    
 
     # add a logo to the sidebar always
-    st.sidebar.image("assets/logo.png", width = 150)
+    st.sidebar.image("assets/logo.png", width=150, use_column_width=True)
 
     # If there is no logged in user, redirect to the Home (Landing) page
     if 'authenticated' not in st.session_state:
@@ -90,6 +93,8 @@ def SideBarLinks(show_home=False):
             AdvertiserHomeNav()
             Audiences()
             Ads()
+            Engagement()
+            
 
     # Always show the About page at the bottom of the list of links
     AboutPageNav()
