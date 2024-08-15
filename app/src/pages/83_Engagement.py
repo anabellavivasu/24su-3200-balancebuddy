@@ -8,11 +8,7 @@ import requests
 # Call the SideBarLinks from the nav module in the modules directory
 SideBarLinks()
 
-# set the header of the page
-st.header('Engagement Data')
-
-# You can access the session state to make a more customized/personalized app experience
-st.write(f"### Hi, {st.session_state['first_name']}.")
+st.write("# View Engagement")
 
 # get the engagement from the balancebuddy data
 with st.echo(code_location='above'):

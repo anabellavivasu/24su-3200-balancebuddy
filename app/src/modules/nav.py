@@ -39,7 +39,7 @@ def AdminPageNav():
 
 ## ------------------------ Examples for Role of advertiser ------------------------
 def AdvertiserHomeNav():
-    st.sidebar.page_link("pages/08_Livefit_Home.py", label="Advertiser Home", icon='👤')
+    st.sidebar.page_link("pages/08_Livefit_Home.py", label="Advertiser Home", icon='🏠')
 
 def Audiences():
     st.sidebar.page_link("pages/81_Audiences.py", label="Create Audience", icon='👥')

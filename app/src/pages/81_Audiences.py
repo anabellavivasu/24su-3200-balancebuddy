@@ -20,11 +20,11 @@ with st.form("Create a New Audience"):
 
 if submitted:
     data = {}
-    data['audience_name'] = aud_name
-    data['audience_location'] = aud_location
-    data['audience_interest'] = aud_interest
-    data['audience_age'] = aud_age
-    data['audience_budget'] = aud_budget
+    data['name'] = aud_name
+    data['location'] = aud_location
+    data['interest'] = aud_interest
+    data['age_range'] = aud_age
+    data['budget'] = aud_budget
     st.write(data)
 
-    requests.post('http://api:4000/p/product', json=data)
+    requests.post('http://api:4000/l/audiences', json=data)
