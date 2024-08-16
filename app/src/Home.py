@@ -46,6 +46,14 @@ if st.button('Act as John, a Marketing Director',
     st.session_state['first_name'] = 'John'
     st.switch_page('pages/60_John_home.py')
 
+if st.button('Act as Adam, a College Student', 
+            type = 'primary', 
+            use_container_width=True):
+    st.session_state['authenticated'] = True
+    st.session_state['role'] = 'student'
+    st.session_state['first_name'] = 'Adam'
+    st.switch_page('pages/40_Adam_Home.py')
+
 if st.button('Act as Stephen, a Nutritionist', 
             type = 'primary', 
             use_container_width=True):

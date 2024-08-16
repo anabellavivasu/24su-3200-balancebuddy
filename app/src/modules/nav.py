@@ -19,6 +19,16 @@ def AdsJohn():
 def MarketResearchJohn():
     st.sidebar.page_link("pages/62_Market_Research.py", label="Market Research", icon='📈')
 
+## ------------------------ Role of Student Adam ------------------------
+def AdamHomeNav():
+    st.sidebar.page_link("pages/40_Adam_Home.py", label="Adam Home", icon='🏠')
+
+def FoodLogAdam():
+    st.sidebar.page_link("pages/41_Food_Log.py", label="Food Log", icon='🍏')
+
+def ExerciseLogAdam():
+    st.sidebar.page_link("pages/42_Exercise_Log.py", label="Exercise Log", icon='💪')
+
 ## ------------------------ Role of Nutritionist Stephen ------------------------
 def StephenHomeNav():
     st.sidebar.page_link("pages/70_Stephen_Home.py", label="Stephen Home", icon='🏠')
@@ -68,6 +78,12 @@ def SideBarLinks(show_home=False):
             JohnHomeNav()
             AdsJohn()
             MarketResearchJohn()     
+
+        # Show Adam functions if the user is a Student.
+        if st.session_state['role'] == 'student':
+            AdamHomeNav()
+            FoodLogAdam()
+            ExerciseLogAdam()
 
         # Show Stephen functions if the user is a Nutritionist.
         if st.session_state['role'] == 'nutritionist':

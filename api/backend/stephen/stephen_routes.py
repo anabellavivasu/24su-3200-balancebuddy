@@ -93,7 +93,6 @@ def get_all_clients():
     print(the_data)
     return jsonify(the_data)
 
-
 # Delete a client
 @stephen.route('/delete', methods=['DELETE'])
 def delete_client():
