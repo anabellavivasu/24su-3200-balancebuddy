@@ -5,9 +5,11 @@ from modules.nav import SideBarLinks
 
 logger = logging.getLogger(__name__)
 
+st.set_page_config(layout='wide')
+
 SideBarLinks()
 
-st.write("# Add a New Food Log Entry")
+st.title('Add a New Food Log Entry')
 
 with st.form("Create a New Food Log"):
     client_id = st.text_input("Input Client ID:")

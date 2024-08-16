@@ -5,9 +5,11 @@ from modules.nav import SideBarLinks
 
 logger = logging.getLogger(__name__)
 
+st.set_page_config(layout='wide')
+
 SideBarLinks()
 
-st.write("# Delete a Client")
+st.title('Delete a Client')
 st.write("## Note: This action cannot be reversed!")
 
 client_id = st.text_input("Input Client ID to Delete:")

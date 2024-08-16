@@ -5,9 +5,11 @@ from modules.nav import SideBarLinks
 
 logger = logging.getLogger(__name__)
 
+st.set_page_config(layout='wide')
+
 SideBarLinks()
 
-st.write("# Add a New Client")
+st.title('Add a New Client')
 
 with st.form("Create a New Client"):
     client_name = st.text_input("Input Client Name:")

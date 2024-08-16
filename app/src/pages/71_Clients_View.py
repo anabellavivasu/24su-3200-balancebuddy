@@ -5,9 +5,11 @@ from modules.nav import SideBarLinks
 
 logger = logging.getLogger(__name__)
 
+st.set_page_config(layout='wide')
+
 SideBarLinks()
 
-st.write("# View All Clients")
+st.title('View All Clients')
 
 try:
     clients = requests.get('http://api:4000/stephen/clients').json()
