@@ -37,7 +37,7 @@ def AdminPageNav():
     st.sidebar.page_link("pages/20_Admin_Home.py", label="System Admin", icon='🖥️')
     st.sidebar.page_link("pages/21_ML_Model_Mgmt.py", label='ML Model Management', icon='🏢')
 
-## ------------------------ Examples for Role of advertiser ------------------------
+## ------------------------ Role of Advertiser ------------------------
 def AdvertiserHomeNav():
     st.sidebar.page_link("pages/08_Livefit_Home.py", label="Advertiser Home", icon='🏠')
 
@@ -49,6 +49,16 @@ def Ads():
 
 def Engagement():
     st.sidebar.page_link("pages/83_Engagement.py", label="View Engagement", icon='📈')
+
+## ------------------------ Role of Marketing Director John ------------------------
+def JohnHomeNav():
+    st.sidebar.page_link("pages/60_John_home.py", label="John Home", icon='🏠')
+
+def AdsJohn():
+    st.sidebar.page_link("pages/61_Ad_View.py", label="Ads", icon='📝')
+
+def MarketResearchJohn():
+    st.sidebar.page_link("pages/62_Market_Research.py", label="Market Research", icon='📈')
 
 # --------------------------------Links Function -----------------------------------------------
 def SideBarLinks(show_home=False):
@@ -94,7 +104,12 @@ def SideBarLinks(show_home=False):
             Audiences()
             Ads()
             Engagement()
-            
+
+         # Show John functions if the user is a Marketing Director.
+        if st.session_state['role'] == 'marketing_director':
+            JohnHomeNav()
+            AdsJohn()
+            MarketResearchJohn()          
 
     # Always show the About page at the bottom of the list of links
     AboutPageNav()
