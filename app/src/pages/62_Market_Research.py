@@ -24,6 +24,10 @@ if submitted:
     data['trends'] = market_research_trends
     data['competition'] = market_research_competition
     data['advertiser_id'] = advertisement_advertiser_id
-    st.write(data)
 
-    requests.post('http://api:4000/j/market_research', json=data)
+    response = requests.post('http://api:4000/j/market_research', json=data)
+
+    if response.status_code == 200:
+        st.success("Market Research Entry added successfully!")
+    else:
+        st.error("Failed to enter Market Research.")

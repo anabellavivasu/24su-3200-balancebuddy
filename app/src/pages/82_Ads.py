@@ -30,9 +30,13 @@ if submitted:
     data['budget'] = advertisement_budget
     data['caption'] = advertisement_caption
     data['advertiser_id'] = advertisement_advertiser_id
-    st.write(data)
 
-    requests.post('http://api:4000/l/ads', json=data)
+    response = requests.post('http://api:4000/l/ads', json=data)
+
+    if response.status_code == 200:
+        st.success("Ad added successfully!")
+    else:
+        st.error("Failed to add ad.")
 
 st.write("# Delete an Ad")
 st.write("## Note: This Action cannot be Reversed")
@@ -45,6 +49,10 @@ with st.form("Delete an Ad"):
 if submitted:
     data = {}
     data['ad_id'] = advertisement_id
-    st.write('Ad Deleted')
 
-    requests.delete('http://api:4000/l/delete', json=data)
+    response = requests.delete('http://api:4000/l/delete', json=data)
+
+    if response.status_code == 200:
+        st.success("Ad deleted successfully!")
+    else:
+        st.error("Failed to delete ad.")

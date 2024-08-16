@@ -25,6 +25,10 @@ if submitted:
     data['interest'] = aud_interest
     data['age_range'] = aud_age
     data['budget'] = aud_budget
-    st.write(data)
 
-    requests.post('http://api:4000/l/audiences', json=data)
+    response = requests.post('http://api:4000/l/audiences', json=data)
+
+    if response.status_code == 200:
+        st.success("Audience added successfully!")
+    else:
+        st.error("Failed to add Audience.")
