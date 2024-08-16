@@ -9,8 +9,7 @@ CREATE TABLE Users (
     username VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     name VARCHAR(100),
-    demographic VARCHAR(100)
-);
+    demographic VARCHAR(100));
 
 -- Table: Clients
 CREATE TABLE Clients (
@@ -23,15 +22,13 @@ CREATE TABLE Clients (
     health_goal TEXT,
     dietary_restrictions TEXT,
     user_id INT,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id) -- Optional, if Clients are also Users
-);
+    FOREIGN KEY (user_id) REFERENCES Users(user_id));
 
 -- Table: Nutritionists
 CREATE TABLE Nutritionists (
     nutritionist_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
-    contact VARCHAR(100)
-);
+    contact VARCHAR(100));
 
 -- Table: Audiences
 CREATE TABLE Audiences (
@@ -40,8 +37,7 @@ CREATE TABLE Audiences (
     location VARCHAR(100),
     interest VARCHAR(100),
     age_range VARCHAR(50),
-    budget DECIMAL(10,2)
-);
+    budget DECIMAL(10,2));
 
 -- Table: Advertisers
 CREATE TABLE Advertisers (
@@ -49,8 +45,7 @@ CREATE TABLE Advertisers (
     name VARCHAR(100),
     email VARCHAR(100),
     phone VARCHAR(20),
-    payment_info TEXT
-);
+    payment_info TEXT);
 
 -- Table: Ads
 CREATE TABLE Ads (
@@ -62,8 +57,7 @@ CREATE TABLE Ads (
     budget DECIMAL(10,2),
     caption TEXT,
     advertiser_id INT,
-    FOREIGN KEY (advertiser_id) REFERENCES Advertisers(advertiser_id)
-);
+    FOREIGN KEY (advertiser_id) REFERENCES Advertisers(advertiser_id));
 
 -- Table: Engagement
 CREATE TABLE Engagement (
@@ -71,8 +65,7 @@ CREATE TABLE Engagement (
     feedback TEXT,
     count INT,
     ad_id INT,
-    FOREIGN KEY (ad_id) REFERENCES Ads(ad_id)
-);
+    FOREIGN KEY (ad_id) REFERENCES Ads(ad_id));
 
 -- Table: Market_Research
 CREATE TABLE Market_Research (
@@ -81,8 +74,7 @@ CREATE TABLE Market_Research (
     trends TEXT,
     competition TEXT,
     advertiser_id INT,
-    FOREIGN KEY (advertiser_id) REFERENCES Advertisers(advertiser_id)
-);
+    FOREIGN KEY (advertiser_id) REFERENCES Advertisers(advertiser_id));
 
 -- Table: User_Client (many-to-many relationship between Users and Clients)
 CREATE TABLE User_Client (
@@ -90,8 +82,7 @@ CREATE TABLE User_Client (
     client_id INT,
     PRIMARY KEY (user_id, client_id),
     FOREIGN KEY (user_id) REFERENCES Users(user_id),
-    FOREIGN KEY (client_id) REFERENCES Clients(client_id)
-);
+    FOREIGN KEY (client_id) REFERENCES Clients(client_id));
 
 -- Table: User_Nutritionist (many-to-many relationship between Users and Nutritionists)
 CREATE TABLE User_Nutritionist (
@@ -99,8 +90,7 @@ CREATE TABLE User_Nutritionist (
     nutritionist_id INT,
     PRIMARY KEY (user_id, nutritionist_id),
     FOREIGN KEY (user_id) REFERENCES Users(user_id),
-    FOREIGN KEY (nutritionist_id) REFERENCES Nutritionists(nutritionist_id)
-);
+    FOREIGN KEY (nutritionist_id) REFERENCES Nutritionists(nutritionist_id));
 
 -- Table: User_Audience (many-to-many relationship between Users and Audiences)
 CREATE TABLE User_Audience (
@@ -108,8 +98,7 @@ CREATE TABLE User_Audience (
     audience_id INT,
     PRIMARY KEY (user_id, audience_id),
     FOREIGN KEY (user_id) REFERENCES Users(user_id),
-    FOREIGN KEY (audience_id) REFERENCES Audiences(audience_id)
-);
+    FOREIGN KEY (audience_id) REFERENCES Audiences(audience_id));
 
 -- Table: Food_Log
 CREATE TABLE Food_Log (
@@ -120,8 +109,7 @@ CREATE TABLE Food_Log (
     food_items TEXT,
     calories DECIMAL(10,2),
     client_id INT,
-    FOREIGN KEY (client_id) REFERENCES Clients(client_id)
-);
+    FOREIGN KEY (client_id) REFERENCES Clients(client_id));
 
 -- Table: Vitamins_Minerals (many-to-many relationship with Food_Log)
 CREATE TABLE Vitamins_Minerals (
@@ -130,8 +118,7 @@ CREATE TABLE Vitamins_Minerals (
     mineral_type VARCHAR(100),
     vitamin_type VARCHAR(100),
     PRIMARY KEY (food_log_id, mineral_type, vitamin_type),
-    FOREIGN KEY (food_log_id) REFERENCES Food_Log(food_log_id)
-);
+    FOREIGN KEY (food_log_id) REFERENCES Food_Log(food_log_id));
 
 -- Table: Schedule
 CREATE TABLE Schedule (
@@ -143,8 +130,7 @@ CREATE TABLE Schedule (
     exercise_time_line TEXT,
     day_of_week VARCHAR(20),
     client_id INT,
-    FOREIGN KEY (client_id) REFERENCES Clients(client_id)
-);
+    FOREIGN KEY (client_id) REFERENCES Clients(client_id));
 
 -- Table: Exercise_Info
 CREATE TABLE Exercise_Info (
@@ -156,8 +142,7 @@ CREATE TABLE Exercise_Info (
     height DECIMAL(5,2),
     max_HR INT,
     exercise_pages TEXT,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id)
-);
+    FOREIGN KEY (user_id) REFERENCES Users(user_id));
 
 -- Table: Report
 CREATE TABLE Report (
@@ -168,8 +153,7 @@ CREATE TABLE Report (
     text TEXT,
     date DATE,
     client_id INT,
-    FOREIGN KEY (client_id) REFERENCES Clients(client_id)
-);
+    FOREIGN KEY (client_id) REFERENCES Clients(client_id));
 
 -- Table: Communication
 CREATE TABLE Communication (
@@ -177,8 +161,7 @@ CREATE TABLE Communication (
     message TEXT,
     date DATE,
     client_id INT,
-    FOREIGN KEY (client_id) REFERENCES Clients(client_id)
-);
+    FOREIGN KEY (client_id) REFERENCES Clients(client_id));
 
 -- Table: Meal_Plan
 CREATE TABLE Meal_Plan (
@@ -189,8 +172,7 @@ CREATE TABLE Meal_Plan (
     updated_date DATE,
     created_at DATE,
     client_id INT,
-    FOREIGN KEY (client_id) REFERENCES Clients(client_id)
-);
+    FOREIGN KEY (client_id) REFERENCES Clients(client_id));
 
 -- Table: Audience_Engagement (many-to-many relationship between Audiences and Engagements)
 CREATE TABLE Audience_Engagement (
@@ -198,9 +180,9 @@ CREATE TABLE Audience_Engagement (
     engagement_id INT,
     PRIMARY KEY (audience_id, engagement_id),
     FOREIGN KEY (audience_id) REFERENCES Audiences(audience_id),
-    FOREIGN KEY (engagement_id) REFERENCES Engagement(engagement_id)
-);
+    FOREIGN KEY (engagement_id) REFERENCES Engagement(engagement_id));
 
+-- Insert Users
 insert into Users (username, email, name, demographic, user_id) values ('asecrett0', 'asecrett0@cisco.com', 'Aube Secrett', 'Sri Lankan', 1);
 insert into Users (username, email, name, demographic, user_id) values ('ybaum1', 'ybaum1@ft.com', 'Yuri Baum', 'Alaskan Athabascan', 2);
 insert into Users (username, email, name, demographic, user_id) values ('aperfect2', 'aperfect2@wikispaces.com', 'Adrienne Perfect', 'White', 3);
@@ -237,6 +219,7 @@ insert into Users (username, email, name, demographic, user_id) values ('ekhoter
 insert into Users (username, email, name, demographic, user_id) values ('wmcmychemx', 'wmcmychemx@ucsd.edu', 'Welsh McMychem', 'Ute', 34);
 insert into Users (username, email, name, demographic, user_id) values ('ccrollmany', 'ccrollmany@bigcartel.com', 'Carlota Crollman', 'Cambodian', 35);
 
+-- Insert Clients
 insert into Clients (name, age, gender, contact, user_id, client_id, dietary_preferences, dietary_restrictions, health_goal) values ('Buddie Pearn', 39, 'Male', 'bpearn0@patch.com', 1, 1, 'intermittent fasting', 'Vegan', 'Lose Weight');
 insert into Clients (name, age, gender, contact, user_id, client_id, dietary_preferences, dietary_restrictions, health_goal) values ('Pier Allum', 83, 'Female', 'pallum1@wikipedia.org', 2, 2, 'intermittent fasting', 'Flexitarian and Macrobiotic Diet', 'Gain Muscle');
 insert into Clients (name, age, gender, contact, user_id, client_id, dietary_preferences, dietary_restrictions, health_goal) values ('Gustav Panas', 29, 'Male', 'gpanas2@latimes.com', 3, 3, 'No dairy', 'Vegetarian', 'More Confidence');
@@ -273,6 +256,7 @@ insert into Clients (name, age, gender, contact, user_id, client_id, dietary_pre
 insert into Clients (name, age, gender, contact, user_id, client_id, dietary_preferences, dietary_restrictions, health_goal) values ('Sibelle Wherrit', 68, 'Female', 'swherritx@jugem.jp', 34, 34, 'No dairy', 'Vegetarian', 'Feel Strong');
 insert into Clients (name, age, gender, contact, user_id, client_id, dietary_preferences, dietary_restrictions, health_goal) values ('Dom Brideau', 60, 'Male', 'dbrideauy@latimes.com', 35, 35, 'No dairy', 'Vegan', 'Gain Muscle');
 
+-- Insert Nutritionists
 insert into Nutritionists (nutritionist_id, name, contact) values (1, 'Brooks Guerola', 'bguerola0@dropbox.com');
 insert into Nutritionists (nutritionist_id, name, contact) values (2, 'Doti Sjollema', 'dsjollema1@bloglovin.com');
 insert into Nutritionists (nutritionist_id, name, contact) values (3, 'Diane Portwain', 'dportwain2@wunderground.com');
@@ -359,6 +343,7 @@ insert into Nutritionists (nutritionist_id, name, contact) values (83, 'Zeke Mac
 insert into Nutritionists (nutritionist_id, name, contact) values (84, 'Alonso McCarron', 'amccarron2b@spotify.com');
 insert into Nutritionists (nutritionist_id, name, contact) values (85, 'Tommi Giottini', 'tgiottini2c@spiegel.de');
 
+-- Inset Audiences
 insert into Audiences (name, location, interest, age_range, budget, audience_id) values ('Conant Pitcock', 'Solnechnogorsk', 'Hobbies', 61, '37571', 1);
 insert into Audiences (name, location, interest, age_range, budget, audience_id) values ('Teriann Frany', 'Lagoa Seca', 'Sports', 91, '2495.02', 2);
 insert into Audiences (name, location, interest, age_range, budget, audience_id) values ('Nancee Pagitt', 'Hukeng', 'Reading', 50, '8588.51', 3);
@@ -391,6 +376,7 @@ insert into Audiences (name, location, interest, age_range, budget, audience_id)
 insert into Audiences (name, location, interest, age_range, budget, audience_id) values ('Kirstyn Polak', 'Awayan', 'Sports', 28, '15709.56', 30);
 insert into Audiences (name, location, interest, age_range, budget, audience_id) values ('Lazaro Lumsdall', 'Kimanuit', 'Memes', 49, '29789.63', 31);
 
+-- Insert Advertisers
 insert into Advertisers (name, email, phone, payment_info, advertiser_id) values ('Ignacio Nottingam', 'inottingam0@dailymail.co.uk', '834-540-1652', '6759495396835381863', 1);
 insert into Advertisers (name, email, phone, payment_info, advertiser_id) values ('Ketty Cavolini', 'kcavolini1@springer.com', '261-569-3136', '3580838821234445', 2);
 insert into Advertisers (name, email, phone, payment_info, advertiser_id) values ('Jeanie Storey', 'jstorey2@hubpages.com', '814-886-9374', '3554216048990028', 3);
@@ -422,71 +408,39 @@ insert into Advertisers (name, email, phone, payment_info, advertiser_id) values
 insert into Advertisers (name, email, phone, payment_info, advertiser_id) values ('Evey Espadero', 'eespaderos@npr.org', '851-376-1470', '3570843181690667', 29);
 insert into Advertisers (name, email, phone, payment_info, advertiser_id) values ('Nikaniki Donnan', 'ndonnant@nhs.uk', '573-733-1992', '5462968545198432', 30);
 
-insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/136x100.png/ff4444/ffffff', '2023/01/01', '2023/02/02', 'Helli Christley', '8779.93', 'Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.
-
-Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.', 1, 1);
-insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/111x100.png/dddddd/000000', '2023/01/01', '2023/02/02', 'Mada Leman', '1251.49', 'Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.
-
-Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.', 2, 2);
+-- Insert Ads
+insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/136x100.png/ff4444/ffffff', '2023/01/01', '2023/02/02', 'Helli Christley', '8779.93', 'Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.', 1, 1);
+insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/111x100.png/dddddd/000000', '2023/01/01', '2023/02/02', 'Mada Leman', '1251.49', 'Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.', 2, 2);
 insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/226x100.png/5fa2dd/ffffff', '2023/01/01', '2023/02/02', 'Zitella Castagna', '774.51', 'Fusce consequat. Nulla nisl. Nunc nisl.', 3, 3);
-insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/172x100.png/dddddd/000000', '2023/01/01', '2023/02/02', 'Theodoric Silber', '4265.46', 'Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.
-
-Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.', 4, 4);
-insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/154x100.png/dddddd/000000', '2023/01/01', '2023/02/02', 'Angelita Shird', '3740.67', 'Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.
-
-Sed ante. Vivamus tortor. Duis mattis egestas metus.', 5, 5);
-insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/235x100.png/5fa2dd/ffffff', '2023/01/01', '2023/02/02', 'Farra Peddie', '7551.67', 'Phasellus in felis. Donec semper sapien a libero. Nam dui.
-
-Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.', 6, 6);
-insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/172x100.png/ff4444/ffffff', '2023/01/01', '2023/02/02', 'Hally Queste', '3959.60', 'Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.
-
-Phasellus in felis. Donec semper sapien a libero. Nam dui.', 7, 7);
+insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/172x100.png/dddddd/000000', '2023/01/01', '2023/02/02', 'Theodoric Silber', '4265.46', 'Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.', 4, 4);
+insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/154x100.png/dddddd/000000', '2023/01/01', '2023/02/02', 'Angelita Shird', '3740.67', 'Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis. Sed ante. Vivamus tortor. Duis mattis egestas metus.', 5, 5);
+insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/235x100.png/5fa2dd/ffffff', '2023/01/01', '2023/02/02', 'Farra Peddie', '7551.67', 'Phasellus in felis. Donec semper sapien a libero. Nam dui. Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.', 6, 6);
+insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/172x100.png/ff4444/ffffff', '2023/01/01', '2023/02/02', 'Hally Queste', '3959.60', 'Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus. Phasellus in felis. Donec semper sapien a libero. Nam dui.', 7, 7);
 insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/215x100.png/cc0000/ffffff', '2023/01/01', '2023/02/02', 'Kip Gethouse', '8760.03', 'Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.', 8, 8);
 insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/198x100.png/dddddd/000000', '2023/01/01', '2023/02/02', 'Morley McLice', '6840.20', 'Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.', 9, 9);
 insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/149x100.png/cc0000/ffffff', '2023/01/01', '2023/02/02', 'Gracie Pidduck', '4397.02', 'Fusce consequat. Nulla nisl. Nunc nisl.', 10, 10);
-insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/157x100.png/5fa2dd/ffffff', '2023/01/01', '2023/02/02', 'Galina Saunton', '4466.67', 'Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.
-
-Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.', 11, 11);
+insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/157x100.png/5fa2dd/ffffff', '2023/01/01', '2023/02/02', 'Galina Saunton', '4466.67', 'Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti. Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.', 11, 11);
 insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/181x100.png/dddddd/000000', '2023/01/01', '2023/02/02', 'Hodge Loweth', '1969.74', 'Phasellus in felis. Donec semper sapien a libero. Nam dui.', 12, 12);
-insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/149x100.png/cc0000/ffffff', '2023/01/01', '2023/02/02', 'Pris Nutton', '7734.32', 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.
-
-Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.', 13, 13);
+insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/149x100.png/cc0000/ffffff', '2023/01/01', '2023/02/02', 'Pris Nutton', '7734.32', 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui. Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.', 13, 13);
 insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/228x100.png/ff4444/ffffff', '2023/01/01', '2023/02/02', 'Trevar Goublier', '4495.97', 'Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.', 14, 14);
 insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/241x100.png/5fa2dd/ffffff', '2023/01/01', '2023/02/02', 'Vance Agneau', '7725.09', 'Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.', 15, 15);
 insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/204x100.png/5fa2dd/ffffff', '2023/01/01', '2023/02/02', 'Myca Janc', '1467.52', 'In congue. Etiam justo. Etiam pretium iaculis justo.', 16, 16);
-insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/162x100.png/cc0000/ffffff', '2023/01/01', '2023/02/02', 'Lindsey Martinat', '7110.82', 'Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.
-
-Phasellus in felis. Donec semper sapien a libero. Nam dui.', 17, 17);
+insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/162x100.png/cc0000/ffffff', '2023/01/01', '2023/02/02', 'Lindsey Martinat', '7110.82', 'Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus. Phasellus in felis. Donec semper sapien a libero. Nam dui.', 17, 17);
 insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/237x100.png/5fa2dd/ffffff', '2023/01/01', '2023/02/02', 'Edie Chadbourne', '3083.85', 'Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.', 18, 18);
-insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/118x100.png/dddddd/000000', '2023/01/01', '2023/02/02', 'Angelle Hughman', '3115.13', 'Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.
-
-Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.', 19, 19);
-insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/128x100.png/cc0000/ffffff', '2023/01/01', '2023/02/02', 'Letitia Lanahan', '1943.96', 'Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.
-
-Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.', 20, 20);
+insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/118x100.png/dddddd/000000', '2023/01/01', '2023/02/02', 'Angelle Hughman', '3115.13', 'Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.', 19, 19);
+insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/128x100.png/cc0000/ffffff', '2023/01/01', '2023/02/02', 'Letitia Lanahan', '1943.96', 'Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.', 20, 20);
 insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/183x100.png/ff4444/ffffff', '2023/01/01', '2023/02/02', 'Colby Dodamead', '6396.77', 'Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.', 21, 21);
-insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/201x100.png/ff4444/ffffff', '2023/01/01', '2023/02/02', 'Ailsun Abercrombie', '1541.54', 'Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.
-
-Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 22, 22);
-insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/122x100.png/ff4444/ffffff', '2023/01/01', '2023/02/02', 'Edgar Mashal', '544.38', 'Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.
-
-Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.', 23, 23);
+insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/201x100.png/ff4444/ffffff', '2023/01/01', '2023/02/02', 'Ailsun Abercrombie', '1541.54', 'Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 22, 22);
+insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/122x100.png/ff4444/ffffff', '2023/01/01', '2023/02/02', 'Edgar Mashal', '544.38', 'Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.', 23, 23);
 insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/119x100.png/cc0000/ffffff', '2023/01/01', '2023/02/02', 'Aloysius O''Nions', '8380.95', 'Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.', 24, 24);
 insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/241x100.png/cc0000/ffffff', '2023/01/01', '2023/02/02', 'Amitie Trevillion', '1090.34', 'Fusce consequat. Nulla nisl. Nunc nisl.', 25, 25);
-insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/199x100.png/5fa2dd/ffffff', '2023/01/01', '2023/02/02', 'Babbette Cominoli', '8629.49', 'Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.
-
-In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.', 26, 26);
+insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/199x100.png/5fa2dd/ffffff', '2023/01/01', '2023/02/02', 'Babbette Cominoli', '8629.49', 'Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.', 26, 26);
 insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/210x100.png/dddddd/000000', '2023/01/01', '2023/02/02', 'Johan Pullinger', '4183.01', 'Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.', 27, 27);
-insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/112x100.png/5fa2dd/ffffff', '2023/01/01', '2023/02/02', 'Sibylle Crowne', '9863.15', 'Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.
+insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/112x100.png/5fa2dd/ffffff', '2023/01/01', '2023/02/02', 'Sibylle Crowne', '9863.15', 'Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.', 28, 28);
+insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/226x100.png/cc0000/ffffff', '2023/01/01', '2023/02/02', 'Tabby Krikorian', '2670.73', 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.', 29, 29);
+insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/228x100.png/ff4444/ffffff', '2023/01/01', '2023/02/02', 'Kari Orrill', '3622.51', 'Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl. Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.', 30, 30);
 
-In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.', 28, 28);
-insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/226x100.png/cc0000/ffffff', '2023/01/01', '2023/02/02', 'Tabby Krikorian', '2670.73', 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.
-
-Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.', 29, 29);
-insert into Ads (image_url, start_date, end_date, name, budget, caption, advertiser_id, ad_id) values ('http://dummyimage.com/228x100.png/ff4444/ffffff', '2023/01/01', '2023/02/02', 'Kari Orrill', '3622.51', 'Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.
-
-Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.', 30, 30);
-
+-- Insert Engagement
 insert into Engagement (engagement_id, feedback, count, ad_id) values (1, 10, 21384, 1);
 insert into Engagement (engagement_id, feedback, count, ad_id) values (2, 8, 36679, 2);
 insert into Engagement (engagement_id, feedback, count, ad_id) values (3, 3, 21170, 3);
@@ -518,6 +472,7 @@ insert into Engagement (engagement_id, feedback, count, ad_id) values (28, 5, 15
 insert into Engagement (engagement_id, feedback, count, ad_id) values (29, 5, 29712, 29);
 insert into Engagement (engagement_id, feedback, count, ad_id) values (30, 9, 20158, 30);
 
+-- Insert Market Research
 insert into Market_Research (findings, trends, competition, advertiser_id) values (1, 'condimentum id luctus nec molestie sed justo pellentesque viverra pede ac', 'Twitterwire', 1);
 insert into Market_Research (findings, trends, competition, advertiser_id) values (2, 'aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam', 'Viva', 2);
 insert into Market_Research (findings, trends, competition, advertiser_id) values (3, 'quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus phasellus in felis donec semper', 'Centizu', 3);
@@ -549,6 +504,7 @@ insert into Market_Research (findings, trends, competition, advertiser_id) value
 insert into Market_Research (findings, trends, competition, advertiser_id) values (29, 'nulla eget eros elementum pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget semper rutrum', 'Youspan', 29);
 insert into Market_Research (findings, trends, competition, advertiser_id) values (30, 'nisl duis ac nibh fusce lacus purus aliquet at feugiat non pretium quis lectus suspendisse potenti in eleifend quam', 'Riffpath', 30);
 
+-- Insert User Clients
 insert into User_Client (user_id, client_id) values (1, 1);
 insert into User_Client (user_id, client_id) values (2, 2);
 insert into User_Client (user_id, client_id) values (3, 3);
@@ -585,6 +541,7 @@ insert into User_Client (user_id, client_id) values (33, 33);
 insert into User_Client (user_id, client_id) values (34, 34);
 insert into User_Client (user_id, client_id) values (35, 35);
 
+-- Insert User Nutritionists
 insert into User_Nutritionist (user_id, nutritionist_id) values (1, 1);
 insert into User_Nutritionist (user_id, nutritionist_id) values (2, 2);
 insert into User_Nutritionist (user_id, nutritionist_id) values (3, 3);
@@ -621,6 +578,7 @@ insert into User_Nutritionist (user_id, nutritionist_id) values (33, 33);
 insert into User_Nutritionist (user_id, nutritionist_id) values (34, 34);
 insert into User_Nutritionist (user_id, nutritionist_id) values (35, 35);
 
+-- Insert User Audeinces
 insert into User_Audience (user_id, audience_id) values (1, 1);
 insert into User_Audience (user_id, audience_id) values (2, 2);
 insert into User_Audience (user_id, audience_id) values (3, 3);
@@ -652,6 +610,7 @@ insert into User_Audience (user_id, audience_id) values (28, 28);
 insert into User_Audience (user_id, audience_id) values (29, 29);
 insert into User_Audience (user_id, audience_id) values (30, 30);
 
+-- Insert Food Log
 insert into Food_Log (food_log_id, client_id, calories, food_items, comments, meal_type, date) values (1, 1, 751, 'ice cream', 'Needs Work', 'Breakfast', '2023/09/09');
 insert into Food_Log (food_log_id, client_id, calories, food_items, comments, meal_type, date) values (2, 2, 1191, 'pasta', 'Great', 'Dinner', '2023/09/09');
 insert into Food_Log (food_log_id, client_id, calories, food_items, comments, meal_type, date) values (3, 3, 315, 'pasta', 'Okay', 'Lunch', '2023/09/09');
@@ -688,84 +647,35 @@ insert into Food_Log (food_log_id, client_id, calories, food_items, comments, me
 insert into Food_Log (food_log_id, client_id, calories, food_items, comments, meal_type, date) values (34, 34, 328, 'carrots', 'Okay', 'Lunch', '2023/09/09');
 insert into Food_Log (food_log_id, client_id, calories, food_items, comments, meal_type, date) values (35, 35, 826, 'apples', 'Okay', 'Breakfast', '2023/09/09');
 
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '18:12:00', '10:52', 9, '13:24:00', 'Sunday', 1, 1);
+-- Insert Schedule
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '18:12:00', '10:52', 9, '13:24:00', 'Sunday', 1, 1);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '20:03:00', '20:41', 12, '18:08:00', 'Tuesday', 2, 2);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '11:15:00', '3:57', 1, '07:29:00', 'Saturday', 3, 3);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '12:09:00', '17:11', 23, '17:59:00', 'Monday', 4, 4);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '02:42:00', '4:33', 7, '15:08:00', 'Monday', 5, 5);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '21:56:00', '19:16', 12, '15:02:00', 'Saturday', 6, 6);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '17:51:00', '14:04', 8, '15:57:00', 'Sunday', 7, 7);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '02:44:00', '21:04', 5, '16:58:00', 'Saturday', 8, 8);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '10:42:00', '15:11', 3, '12:17:00', 'Sunday', 9, 9);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '21:27:00', '11:53', 4, '09:18:00', 'Monday', 10, 10);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '11:56:00', '9:32', 11, '19:24:00', 'Friday', 11, 11);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '13:57:00', '8:33', 11, '02:35:00', 'Sunday', 12, 12);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '03:02:00', '13:35', 11, '07:05:00', 'Wednesday', 13, 13);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '00:40:00', '17:54', 17, '12:35:00', 'Monday', 14, 14);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '01:06:00', '22:48', 9, '01:16:00', 'Thursday', 15, 15);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '13:47:00', '17:08', 1, '05:50:00', 'Saturday', 16, 16);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '22:29:00', '10:54', 23, '11:49:00', 'Wednesday', 17, 17);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '05:36:00', '14:57', 14, '23:39:00', 'Monday', 18, 18);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '07:52:00', '13:06', 13, '06:00:00', 'Monday', 19, 19);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '03:44:00', '18:07', 21, '07:15:00', 'Wednesday', 20, 20);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '10:43:00', '11:53', 13, '02:42:00', 'Thursday', 21, 21);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '14:25:00', '12:41', 3, '11:18:00', 'Thursday', 22, 22);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '21:46:00', '16:51', 10, '04:53:00', 'Wednesday', 23, 23);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '01:19:00', '08:39', 16, '06:05:00', 'Monday', 24, 24);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '01:55:00', '08:26', 20, '07:39:00', 'Wednesday', 25, 25);
+INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id) VALUES ('2023-09-09', '09:54:00', '10:10', 15, '21:44:00', 'Friday', 26, 26);
 
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '20:03:00', '20:41', 12, '18:08:00', 'Tuesday', 2, 2);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '11:15:00', '3:57', 1, '07:29:00', 'Saturday', 3, 3);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '12:09:00', '17:11', 23, '17:59:00', 'Monday', 4, 4);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '02:42:00', '4:33', 7, '15:08:00', 'Monday', 5, 5);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '21:56:00', '19:16', 12, '15:02:00', 'Saturday', 6, 6);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '17:51:00', '14:04', 8, '15:57:00', 'Sunday', 7, 7);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '02:44:00', '21:04', 5, '16:58:00', 'Saturday', 8, 8);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '10:42:00', '15:11', 3, '12:17:00', 'Sunday', 9, 9);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '21:27:00', '11:53', 4, '09:18:00', 'Monday', 10, 10);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '11:56:00', '9:32', 11, '19:24:00', 'Friday', 11, 11);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '13:57:00', '8:33', 11, '02:35:00', 'Sunday', 12, 12);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '03:02:00', '13:35', 11, '07:05:00', 'Wednesday', 13, 13);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '00:40:00', '17:54', 17, '12:35:00', 'Monday', 14, 14);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '01:06:00', '22:48', 9, '01:16:00', 'Thursday', 15, 15);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '13:47:00', '17:08', 1, '05:50:00', 'Saturday', 16, 16);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '22:29:00', '10:54', 23, '11:49:00', 'Wednesday', 17, 17);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '05:36:00', '14:57', 14, '23:39:00', 'Monday', 18, 18);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '07:52:00', '13:06', 13, '06:00:00', 'Monday', 19, 19);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '03:44:00', '18:07', 21, '07:15:00', 'Wednesday', 20, 20);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '10:43:00', '11:53', 13, '02:42:00', 'Thursday', 21, 21);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '14:25:00', '12:41', 3, '11:18:00', 'Thursday', 22, 22);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '21:46:00', '16:51', 10, '04:53:00', 'Wednesday', 23, 23);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '01:19:00', '08:39', 16, '06:05:00', 'Monday', 24, 24);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '01:55:00', '08:26', 20, '07:39:00', 'Wednesday', 25, 25);
-
-INSERT INTO Schedule (calendar, time_of_day, food_timeline, hours, exercise_time_line, day_of_week, client_id, schedule_id)
-VALUES ('2023-09-09', '09:54:00', '10:10', 15, '21:44:00', 'Friday', 26, 26);
-
+-- Insert Exercise Info
 insert into Exercise_Info (BMI, height, weight, breaths_per_minute, user_id, max_HR, exercise_id) values (24, 4, 173.39, 13, 1, 197, 1);
 insert into Exercise_Info (BMI, height, weight, breaths_per_minute, user_id, max_HR, exercise_id) values (32, 71, 39.49, 19, 2, 187, 2);
 insert into Exercise_Info (BMI, height, weight, breaths_per_minute, user_id, max_HR, exercise_id) values (40, 35, 289.71, 15, 3, 161, 3);
@@ -802,6 +712,7 @@ insert into Exercise_Info (BMI, height, weight, breaths_per_minute, user_id, max
 insert into Exercise_Info (BMI, height, weight, breaths_per_minute, user_id, max_HR, exercise_id) values (40, 23, 166.22, 18, 34, 190, 34);
 insert into Exercise_Info (BMI, height, weight, breaths_per_minute, user_id, max_HR, exercise_id) values (24, 9, 15.68, 15, 35, 166, 35);
 
+-- Insert Report
 insert into Report (report_id, client_id, date, text, recommendation, report_date, progress_summary) values (1, 1, '2024/01/01', 'justo morbi ut odio cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem', 'varius integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero non mattis pulvinar nulla pede ullamcorper', '2024/01/01', 'turpis enim blandit mi in porttitor pede justo eu massa donec dapibus');
 insert into Report (report_id, client_id, date, text, recommendation, report_date, progress_summary) values (2, 2, '2024/01/01', 'laoreet ut rhoncus aliquet pulvinar sed nisl nunc rhoncus dui', 'posuere metus vitae ipsum aliquam non mauris morbi non lectus aliquam sit amet diam', '2024/01/01', 'justo sit amet sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla');
 insert into Report (report_id, client_id, date, text, recommendation, report_date, progress_summary) values (3, 3, '2024/01/01', 'condimentum curabitur in libero ut massa volutpat convallis morbi odio odio elementum eu interdum', 'risus semper porta volutpat quam pede lobortis ligula sit amet', '2024/01/01', 'nibh in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id nulla ultrices aliquet maecenas leo odio condimentum');
@@ -834,6 +745,7 @@ insert into Report (report_id, client_id, date, text, recommendation, report_dat
 insert into Report (report_id, client_id, date, text, recommendation, report_date, progress_summary) values (30, 30, '2024/01/01', 'posuere cubilia curae mauris viverra diam vitae quam suspendisse potenti nullam porttitor lacus at turpis donec posuere metus', 'praesent blandit nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi', '2024/01/01', 'eget eros elementum pellentesque quisque porta volutpat erat quisque erat eros');
 insert into Report (report_id, client_id, date, text, recommendation, report_date, progress_summary) values (31, 31, '2024/01/01', 'ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit', 'blandit mi in porttitor pede justo eu massa donec dapibus duis', '2024/01/01', 'ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor gravida');
 
+-- Insert Communication
 insert into Communication (communication_id, client_id, date, message) values (1, 1, '2024/01/01', 'massa tempor convallis nulla neque libero convallis eget eleifend luctus ultricies eu nibh');
 insert into Communication (communication_id, client_id, date, message) values (2, 2, '2024/01/01', 'rutrum nulla nunc purus phasellus in felis donec semper sapien a libero nam dui proin leo odio');
 insert into Communication (communication_id, client_id, date, message) values (3, 3, '2024/01/01', 'congue elementum in hac habitasse platea dictumst morbi vestibulum velit');
@@ -865,6 +777,7 @@ insert into Communication (communication_id, client_id, date, message) values (2
 insert into Communication (communication_id, client_id, date, message) values (29, 29, '2024/01/01', 'erat id mauris vulputate elementum nullam varius nulla facilisi cras non velit nec nisi');
 insert into Communication (communication_id, client_id, date, message) values (30, 30, '2024/01/01', 'vitae quam suspendisse potenti nullam porttitor lacus at turpis donec posuere');
 
+-- Insert Audience Engagement
 insert into Audience_Engagement (audience_id, engagement_id) values (1, 1);
 insert into Audience_Engagement (audience_id, engagement_id) values (2, 2);
 insert into Audience_Engagement (audience_id, engagement_id) values (3, 3);
@@ -896,6 +809,7 @@ insert into Audience_Engagement (audience_id, engagement_id) values (28, 28);
 insert into Audience_Engagement (audience_id, engagement_id) values (29, 29);
 insert into Audience_Engagement (audience_id, engagement_id) values (30, 30);
 
+-- Insert Meal Plan
 insert into Meal_Plan (client_id, created_at, ingredients, description, meal_plan_id, nutrition_info, updated_date) values (1, '2024/01/01', 'pasta', 'dinner', 1, 'and certain vitamins and minerals', '2024/01/01');
 insert into Meal_Plan (client_id, created_at, ingredients, description, meal_plan_id, nutrition_info, updated_date) values (2, '2024/01/01', 'carrots', 'lunch', 2, 'trans fat', '2024/01/01');
 insert into Meal_Plan (client_id, created_at, ingredients, description, meal_plan_id, nutrition_info, updated_date) values (3, '2024/01/01', 'chocolate', 'snack', 3, 'total sugars', '2024/01/01');
@@ -927,6 +841,7 @@ insert into Meal_Plan (client_id, created_at, ingredients, description, meal_pla
 insert into Meal_Plan (client_id, created_at, ingredients, description, meal_plan_id, nutrition_info, updated_date) values (29, '2024/01/01', 'apples', 'lunch', 29, 'fat', '2024/01/01');
 insert into Meal_Plan (client_id, created_at, ingredients, description, meal_plan_id, nutrition_info, updated_date) values (30, '2024/01/01', 'apples', 'breakfast', 30, 'dietary fiber', '2024/01/01');
 
+-- Insert Vitamins/Minerals
 insert into Vitamins_Minerals (quantity, food_log_id, mineral_type, vitamin_type) values (816, 1, 'copper', 'vitamin B');
 insert into Vitamins_Minerals (quantity, food_log_id, mineral_type, vitamin_type) values (849, 2, 'magnesium', 'vitamin A');
 insert into Vitamins_Minerals (quantity, food_log_id, mineral_type, vitamin_type) values (861, 3, 'pphosphorus', 'vitamin B');
