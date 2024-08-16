@@ -11,9 +11,8 @@ SideBarLinks()
 st.write("# View Engagement")
 
 # get the engagement from the balancebuddy data
-with st.echo(code_location='above'):
-    engagement = requests.get('http://api:4000/l/livefit').json()
-    try: 
-        st.dataframe(engagement)
-    except:
-        st.write("Could not connect to database to get engagement")
+engagement = requests.get('http://api:4000/l/livefit').json()
+try: 
+    st.dataframe(engagement)
+except:
+    st.write("Could not connect to database to get engagement")
