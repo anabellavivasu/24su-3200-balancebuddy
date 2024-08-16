@@ -19,18 +19,21 @@ def add_new_client():
     name = the_data['name']
     age = the_data['age']
     gender = the_data['gender']
-    goal = the_data['goal']
+    contact = the_data['contact']
     dietary_preferences = the_data['dietary_preferences']
+    health_goal = the_data['health_goal']
+    dietary_restrictions = the_data['dietary_restrictions']
+    user_id = the_data['user_id']
 
     # Constructing the query
-    column_values = [name, age, gender, goal, dietary_preferences]
+    column_values = [name, age, gender, contact, dietary_preferences, health_goal, dietary_restrictions, user_id]
     def quote_if_string(val):
         quote_char = "'" if isinstance(val, str) else ""
         return f'{quote_char}{val}{quote_char}'
     column_values_string = ", ".join(quote_if_string(c) for c in column_values)
     query = f"""
     INSERT INTO Clients 
-    (name, age, gender, goal, dietary_preferences) 
+    (name, age, gender, contact, dietary_preferences, health_goal, dietary_restrictions, user_id) 
     VALUES ({column_values_string})
             """
     current_app.logger.info(query)
@@ -42,7 +45,6 @@ def add_new_client():
 
     return 'Client added successfully!'
 
-
 # Add a new food log entry
 @stephen.route('/food_logs', methods=['POST'])
 def add_food_log():
@@ -51,20 +53,22 @@ def add_food_log():
     current_app.logger.info(the_data)
 
     # Extracting the variables
-    client_id = the_data['client_id']
-    food_item = the_data['food_item']
+    date = the_data['date']
+    meal_type = the_data['meal_type']
+    comments = the_data['comments']
+    food_items = the_data['food_items']
     calories = the_data['calories']
-    meal_time = the_data['meal_time']
+    client_id = the_data['client_id']
 
     # Constructing the query
-    column_values = [client_id, food_item, calories, meal_time]
+    column_values = [date, meal_type, comments, food_items, calories, client_id]
     def quote_if_string(val):
         quote_char = "'" if isinstance(val, str) else ""
         return f'{quote_char}{val}{quote_char}'
     column_values_string = ", ".join(quote_if_string(c) for c in column_values)
     query = f"""
     INSERT INTO Food_Log 
-    (client_id, food_item, calories, meal_time) 
+    (date, meal_type, comments, food_items, calories, client_id) 
     VALUES ({column_values_string})
             """
     current_app.logger.info(query)
@@ -76,23 +80,31 @@ def add_food_log():
 
     return 'Food log entry added successfully!'
 
-
 # Retrieve all clients
-@stephen.route('/clients', methods=['GET'])
+@stephen.route('/viewclients', methods=['GET'])
 def get_all_clients():
     cursor = db.get_db().cursor()
     the_query = '''
-        SELECT client_id, name, age, gender, goal, dietary_preferences
+        SELECT client_id, name, age, gender, contact, health_goal, dietary_preferences, health_goal, dietary_restrictions
         FROM Clients
     '''
     cursor.execute(the_query)
     the_data = cursor.fetchall()
+    print(the_data)
     return jsonify(the_data)
 
 
 # Delete a client
-@stephen.route('/clients/<int:client_id>', methods=['DELETE'])
-def delete_client(client_id):
+@stephen.route('/delete', methods=['DELETE'])
+def delete_client():
+
+    # collecting data from the request object 
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+    #extracting the variable
+    client_id = the_data['client_id']
+    
     # Constructing the query
     query = f"""
     DELETE FROM Clients WHERE client_id = {client_id}
@@ -106,45 +118,47 @@ def delete_client(client_id):
 
     return 'Client deleted successfully!'
 
-
 # Update a client's information
-@stephen.route('/clients/<int:client_id>', methods=['PUT'])
-def update_client(client_id):
+@stephen.route('/update_client', methods=['PUT'])
+def update_client():
     # Collecting data from the request object
     the_data = request.json
     current_app.logger.info(the_data)
 
     # Extracting the variables
-    name = the_data.get('name')
-    age = the_data.get('age')
-    gender = the_data.get('gender')
-    goal = the_data.get('goal')
-    dietary_preferences = the_data.get('dietary_preferences')
+    client_id = the_data['client_id']
+    name = the_data['name']
+    age = the_data['age']
+    gender = the_data['gender']
+    contact = the_data['contact']
+    dietary_preferences = the_data['dietary_preferences']
+    health_goal = the_data['health_goal']
+    dietary_restrictions = the_data['dietary_restrictions']
+    user_id = the_data['user_id']
 
-    # Constructing the query
-    update_values = []
-    if name:
-        update_values.append(f"name = '{name}'")
-    if age:
-        update_values.append(f"age = {age}")
-    if gender:
-        update_values.append(f"gender = '{gender}'")
-    if goal:
-        update_values.append(f"goal = '{goal}'")
-    if dietary_preferences:
-        update_values.append(f"dietary_preferences = '{dietary_preferences}'")
-    
-    update_values_string = ", ".join(update_values)
-    query = f"""
-    UPDATE Clients 
-    SET {update_values_string}
-    WHERE client_id = {client_id}
-            """
+    # Log the data types
+    current_app.logger.info(f"client_id: {type(client_id)}, name: {type(name)}, age: {type(age)}, gender: {type(gender)}, contact: {type(contact)}, dietary_preferences: {type(dietary_preferences)}, health_goal: {type(health_goal)}, dietary_restrictions: {type(dietary_restrictions)}, user_id: {type(user_id)}")
+
+    # Constructing the parameterized query
+    query = """
+    UPDATE Clients
+    SET client_id = %s,
+        name = %s, 
+        age = %s, 
+        gender = %s,
+        contact = %s, 
+        dietary_preferences = %s, 
+        health_goal = %s, 
+        dietary_restrictions = %s, 
+        user_id = %s
+    WHERE client_id = %s
+    """
     current_app.logger.info(query)
 
     # Executing and committing the update statement
     cursor = db.get_db().cursor()
-    cursor.execute(query)
+    cursor.execute(query, (client_id, name, age, gender, 
+                           contact, dietary_preferences, health_goal, dietary_restrictions, user_id, client_id))
     db.get_db().commit()
 
     return 'Client updated successfully!'

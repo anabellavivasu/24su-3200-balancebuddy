@@ -9,26 +9,30 @@ st.set_page_config(layout='wide')
 
 SideBarLinks()
 
-st.title('Add a New Food Log Entry')
+st.write('# Add a New Food Log Entry')
 
 with st.form("Create a New Food Log"):
-    client_id = st.text_input("Input Client ID:")
-    food_item = st.text_input("Input Food Item:")
-    calories = st.number_input("Input Calories:", min_value=0)
-    meal_time = st.text_input("Input Meal Time:")
+    fl_date = st.text_input("Input Date (YYYY/MM/DD):")
+    fl_meal_type = st.text_input("Input Meal Type:")
+    fl_comments = st.text_input("Input Comments:")
+    fl_food_items = st.text_input("Input Food Items:")
+    fl_calories = st.number_input("Input Calories:", min_value=0)
+    fl_client_id = st.text_input("Input Client ID:")
 
     submitted = st.form_submit_button("Submit")
 
 if submitted:
-    data = {
-        'client_id': client_id,
-        'food_item': food_item,
-        'calories': calories,
-        'meal_time': meal_time
-    }
-    try:
-        response = requests.post('http://api:4000/stephen/food_log', json=data)
-        st.write("Food log entry added successfully!" if response.ok else "Failed to add food log entry.")
-    except Exception as e:
-        st.write("Could not connect to the API to add the food log entry.")
-        logger.error(f"Error adding food log entry: {e}")
+    data = {}
+    data['date'] = fl_date
+    data['meal_type'] = fl_meal_type
+    data['comments'] = fl_comments
+    data['food_items'] = fl_food_items
+    data['calories'] = fl_calories
+    data['client_id'] = fl_client_id
+
+    response = requests.post('http://api:4000/s/food_logs', json=data)
+
+    if response.status_code == 200:
+        st.success("Food Log added successfully!")
+    else:
+        st.error("Failed to add Food Log.")

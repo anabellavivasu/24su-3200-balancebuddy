@@ -88,20 +88,6 @@ def add_new_ad():
     
     return 'Success!'
 
-# view engagement 
-@livefit.route('/livefit', methods=['GET'])
-def get_all_engagement():
-    cursor = db.get_db().cursor()
-    the_query = '''
-        SELECT engagement_id, feedback, count, ad_id
-        FROM Engagement
-        GROUP BY ad_id, engagement_id 
-    '''
-    cursor.execute(the_query)
-    theData = cursor.fetchall()
-    print(theData)
-    return jsonify(theData)
-
 # delete ad
 @livefit.route('/delete', methods = ['DELETE'])
 def delete_ad():
@@ -125,3 +111,17 @@ def delete_ad():
     db.get_db().commit()
 
     return 'Ad deleted successfully!'
+
+# view engagement 
+@livefit.route('/livefit', methods=['GET'])
+def get_all_engagement():
+    cursor = db.get_db().cursor()
+    the_query = '''
+        SELECT engagement_id, feedback, count, ad_id
+        FROM Engagement
+        GROUP BY ad_id, engagement_id 
+    '''
+    cursor.execute(the_query)
+    theData = cursor.fetchall()
+    print(theData)
+    return jsonify(theData)
